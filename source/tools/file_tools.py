@@ -37,8 +37,10 @@ def df2np(df):
 
 
 # load csv
-def load_csv(path):
+def load_csv(path, is_to_np=False):
     data = pd.read_csv(path)
+    if is_to_np:
+        data = df2np(data)
     return data
 
 
