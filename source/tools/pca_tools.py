@@ -1,6 +1,6 @@
 import numpy as np
-import pandas as pd
-
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import savefig
 
 class PCA(object):
     avg = None
@@ -37,7 +37,10 @@ class PCA(object):
 
     @staticmethod
     def feat_value_and_vector(cov_mat):
-        return np.linalg.eig(cov_mat)
+        # use eigh only when mat is symmetrical
+        # if else, use eig
+        featValue, featVec = np.linalg.eigh(cov_mat)
+        return featValue, featVec
 
     def pca(self):
         """
@@ -69,3 +72,18 @@ class PCA(object):
         self.selectVec = np.array(self.featVec.T[index[:self.k]])
         self.mat_pca = np.dot(self.selectVec, self.mat_T_sub).T
         return self.mat_pca
+
+    @staticmethod
+    def plot_distribution(data, classification, path=None):
+        """
+            plot distribution when dimension = 2
+        :param path: save path
+        :param classification: list, classifications of nodes
+        :param data: npArray, dimension = 2
+        :return:
+        """
+
+        plt.scatter(data[:, 0], data[:, 1], marker='o', c=classification, cmap='summer')
+        if path is not None:
+            savefig(path)
+        plt.show()
