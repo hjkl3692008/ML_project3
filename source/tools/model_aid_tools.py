@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import random
 
 
 def drop_col(df, cols):
@@ -29,7 +30,37 @@ def drop_miss(df):
     return df.dropna()
 
 
-def get_column_names(df):
+def get_column_names(df, is_print=False):
     columns_names = df.columns.values.tolist()
-    print(" ".join(columns_names))
+    if is_print:
+        print(" ".join(columns_names))
     return columns_names
+
+
+def get_random_int(a, b):
+    """
+        get a random int between a and b
+    :param a:
+    :param b:
+    :return:
+    """
+    return random.randint(a, b)
+
+
+def get_n_random_int(a, b, n):
+    """
+        get n random int between a and b non-repeatedly
+    :param a:
+    :param b:
+    :param n:
+    :return:
+    """
+    indexList = list(range(a, b))
+    randomIndex = random.sample(indexList, n)
+    return randomIndex
+
+
+def remove_repeat_element_and_sort_list(l, key=None, reverse=False):
+    remove_repeat_list = list(set(l))
+    remove_repeat_list.sort(key=key, reverse=reverse)
+    return remove_repeat_list

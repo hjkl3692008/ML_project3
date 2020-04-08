@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
 from source.tools import pca_tools as pt
+from source.tools import random_forest_tools as rt
+from source.tools import model_aid_tools as mt
+from collections import Counter
 
 a = np.array([[1, 2, 321, 31],
               [3, 4, 43, 12],
@@ -13,10 +16,9 @@ x = a[1:, :]
 
 df = pd.DataFrame(np.arange(12).reshape(3, 4), columns=['A', 'B', 'C', 'D'])
 
-node_classification = np.array([1,1,1,1,0,0,0,0])
-
-for i in range(2):
-    index = np.where(node_classification == i)
-    0
+# rt.information_of_feature(a, label=None, index=1)
+a = np.array([1,2,3,4])
+i1 = np.where(a > 3)
+i2 = np.argwhere(a > 3)
 
 0

@@ -55,7 +55,7 @@ class Kmean(object):
         check2 = (node_classification == last_node_classification).all()
         return check1 or check2
 
-    def kmean(self, k):
+    def train(self, k):
 
         self.k = k
 
@@ -86,7 +86,7 @@ class Kmean(object):
         k_range = list(range(1, k_range))
         for k in k_range:
             k_model = Kmean(self.mat, self.threshold)
-            k_model.kmean(k)
+            k_model.train(k)
             total_distance = k_model.total_distance
             distances.append(total_distance)
 

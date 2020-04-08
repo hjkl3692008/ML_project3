@@ -4,7 +4,7 @@ import pandas as pd
 import os
 import struct
 import numpy as np
-
+import _pickle as pickle
 
 # get cwd
 def get_cwd():
@@ -57,5 +57,41 @@ def load_json(*args):
         return load_dict
 
 
+def save_pickle(file, path):
+    file_buffer = open(path, 'wb')
+    pickle.dump(file, file_buffer)
+    file_buffer.close()
+
+
+def load_pickle(path):
+    file_buffer = open(path, 'rb')
+    file = pickle.load(file_buffer)
+    file_buffer.close()
+    return file
+
+
+# load digit data
+def load_digit(trans=True, is_unified=True):
+    sample_data = load_csv(join_path(basic_path, 'digit', 'sample_submission.csv'))
+
+    test_data = load_csv(join_path(basic_path, 'digit', 'test.csv'))
+    # test_data = pd.read_csv(join_path(basic_path, 'digit', 'test.csv'), nrows=700)
+
+    train_data = load_csv(join_path(basic_path, 'digit', 'train.csv'))
+    if trans:
+        sample_data = np.array(sample_data)
+        test_data = np.array(test_data)
+        train_data = np.array(train_data, dtype=np.uint16)
+    if is_unified:
+        train_data = unify_digit_format(train_data)
+    return sample_data, test_data, train_data
+
+
+# unify digit format
+def unify_digit_format(train_data):
+    label = train_data[:, 0]
+    rest = train_data[:, 1:]
+    result_data = np.column_stack((rest, label))
+    return result_data
 
 
