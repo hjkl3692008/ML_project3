@@ -18,13 +18,15 @@ def digit_RF():
     # RF
     rf = rt.RandomForest(train_data)
     m = 5
-    rf.train(m=m, is_multiprocess=False, path=digit_path)
+    rf.train(m=m, is_multiprocess=True, path=digit_path)
 
     # importance of features
-    tree_path = ft.join_path(digit_path, 'RF_importance_features.png')
-    rf.plot_feature_importance(rf.trees[0], path=tree_path)
+    # tree_path = ft.join_path(digit_path, 'RF_importance_features.png')
+    # rf.plot_feature_importance(rf.trees[0], path=tree_path)
 
     # prediction
+    # tree0 = ft.load_pickle(ft.join_path(digit_path, 'random_forest_tree_0.pickle'))
+    # rf.trees = [tree0]
     predict_labels = rf.predict(np.array(test_data))
     predict_file_path = ft.join_path(digit_path, 'RF_predict_%d.csv' % m)
     ft.save_csv(np.array(predict_labels).T, predict_file_path)
@@ -43,7 +45,7 @@ def digit_knn(is_split=False, k=5, is_find_k=False, is_norm=False, is_pca=False)
     if is_pca:
         # divide train and label
         train_label = train_data[:, train_data.shape[1] - 1]
-        train_data = train_data[:, :train_data.shape[1] - 2]
+        train_data = train_data[:, :train_data.shape[1] - 1]
         # do pca
         pca_model = pt.PCA(train_data, k=331)
         train_data = pca_model.do_pca()
@@ -130,6 +132,6 @@ def human_action():
 
 if __name__ == '__main__':
     # human_action()
-    # digit_RF()
-    digit_knn(is_split=False, k=3, is_find_k=False, is_norm=True, is_pca=False)
+    digit_RF()
+    # digit_knn(is_split=False, k=3, is_find_k=False, is_norm=True, is_pca=True)
     pass

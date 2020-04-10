@@ -17,8 +17,6 @@ x = a[1:, :]
 df = pd.DataFrame(np.arange(12).reshape(3, 4), columns=['A', 'B', 'C', 'D'])
 
 # rt.information_of_feature(a, label=None, index=1)
-a = np.array([1,2,3,4])
-i1 = np.where(a > 3)
-i2 = np.argwhere(a > 3)
-
+d = {'a':1,'b':[2]}
+print(len(d.get('c', [])))
 0
